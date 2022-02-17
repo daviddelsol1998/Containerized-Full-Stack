@@ -1,0 +1,29 @@
+version: "3"
+services:
+  express-app:
+    image: daviddelsol1998/journal-app:latest
+    ports: 
+      - "3000:3000"
+    depends_on:
+      - mongo
+    networks:
+      - journal-app-network
+    volumes:
+      - mongo-data:/data/db
+    environment:
+      SENDGRID_API_KEY: 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
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    networks:
+      - journal-app-network
+    volumes:
+      - mongo-data:/data/db
+
+networks:
+  journal-app-network:
+    driver: bridge
+volumes:
+  mongo-data:
+    driver: local
